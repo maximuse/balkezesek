@@ -5,5 +5,7 @@ public class Main {
 	    Actions.fileToList("balkezesek.csv");
         System.out.println(Actions.task3());
         System.out.println(Actions.task4(1999, 10));
+        Actions.task5();
+        System.out.println(Actions.task6());
     }
 }

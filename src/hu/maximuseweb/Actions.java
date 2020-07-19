@@ -3,9 +3,11 @@ package hu.maximuseweb;
 import java.io.RandomAccessFile;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 class Actions {
     private static ArrayList<Player> list;
+    private static int year;
 
     private static ArrayList<Player> getList() {
         return list;
@@ -13,6 +15,14 @@ class Actions {
 
     private static void setList(ArrayList<Player> list) {
         Actions.list = list;
+    }
+
+    private static int getYear() {
+        return year;
+    }
+
+    private static void setYear(int year) {
+        Actions.year = year;
     }
 
     static void fileToList(String fileName) {
@@ -64,5 +74,47 @@ class Actions {
         }
 
         return "4. feladat: " + result;
+    }
+
+    static void task5() {
+        System.out.println("5. feladat:");
+
+        Scanner s = new Scanner(System.in);
+        int year;
+        boolean firstRun = true;
+        boolean error = true;
+
+        do {
+            System.out.print((firstRun) ? "\tKérek egy 1990 és 1999 közötti évszámot!: " : "\tHibás adat! Kérek egy 1990 és 1999 közötti évszámot!: ");
+            firstRun = false;
+            year = s.nextInt();
+
+            if (year >= 1990 && year <= 1999) {
+                error = false;
+                setYear(year);
+            }
+        }
+        while (error);
+    }
+
+    static String task6() {
+        String[] firstPlay;
+        String[] lastPlay;
+        double avg = 0;
+        int counter = 0;
+
+        for (Player player : Actions.getList()) {
+            firstPlay = getSplittedDate(player.getFirstPlay());
+            lastPlay = getSplittedDate(player.getLastPlay());
+
+            if (getYear() >= Integer.parseInt(firstPlay[0]) && getYear() <= Integer.parseInt(lastPlay[0])) {
+                avg += player.getWeight();
+                counter++;
+            }
+        }
+
+        avg /= counter;
+
+        return "6. feladat: " + String.format("%.2f", avg) + " font";
     }
 }
